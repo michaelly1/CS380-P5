@@ -17,6 +17,7 @@ public class UdpClient {
             InputStream is = socket.getInputStream();
             OutputStream os = socket.getOutputStream();
 
+            //first packet with no udp and data = 0xDEADBEEF
             byte[] deadbeef = {(byte)0xDE, (byte)0xAD, (byte)0xBE, (byte)0xEF};
 
             os.write(IPV4UDP(4,deadbeef));
@@ -29,6 +30,7 @@ public class UdpClient {
 
             System.out.println();
 
+            //port number of dest addr
             byte port1 = (byte) is.read(), port2 = (byte) is.read();
 
             int port = (((port1 << 8) & 0xFF00) + (port2 & 0xFF));
@@ -41,7 +43,7 @@ public class UdpClient {
             {
                 //UDP header
                 int length = (int)Math.pow(2,i+1);
-                System.out.println("\nSending packets with " + length + " packets of data");
+                System.out.println("\nSending packets with " + length + " bytes of data");
 
                 byte[] UDPpacket = new byte[8+length];
 
@@ -242,5 +244,3 @@ public class UdpClient {
             return (short) ~(sum & 0xFFFF);
     }
 }
-
-
